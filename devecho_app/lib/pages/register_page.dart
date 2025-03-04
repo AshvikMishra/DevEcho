@@ -1,3 +1,4 @@
+import 'package:devecho_app/auth/auth_service.dart';
 import 'package:devecho_app/components/my_button.dart';
 import 'package:devecho_app/components/my_textfield.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,33 @@ class RegisterPage extends StatelessWidget {
     required this.onTap,
   });
 
-  void register() {}
+  void register(BuildContext context) {
+    final _auth = AuthService();
+
+    if (_pwdController.text == _confirmpwdController.text){
+      try {
+        _auth.signUpWithEmailPassword(_emailController.text, _pwdController.text);
+      }
+      catch (e){
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    }
+
+    else{
+      showDialog(
+        context: context, 
+        builder: (context) => const AlertDialog(
+          title: Text("Passwords don't match!", style: TextStyle(fontSize: 16),),
+        ),
+      );
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +96,7 @@ class RegisterPage extends StatelessWidget {
 
             MyButton(
               text: "Register",
-              onTap: register,
+              onTap: () => register(context),
             ),
 
             const SizedBox(height: 25),
