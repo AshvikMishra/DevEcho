@@ -9,7 +9,7 @@ class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
 
-  ChatPage({
+  const ChatPage({
     super.key,
     required this.receiverEmail,
     required this.receiverID,
@@ -27,6 +27,7 @@ class _ChatPageState extends State<ChatPage> {
 
   FocusNode myFocusNode = FocusNode();
 
+  @override
   void initState() {
     super.initState();
 
@@ -146,7 +147,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Theme.of(context).colorScheme.primary,
               shape: BoxShape.circle,
             ),
             margin: const EdgeInsets.only(right: 25),
@@ -154,7 +155,7 @@ class _ChatPageState extends State<ChatPage> {
               onPressed: sendMessage,
               icon: const Icon(
                 Icons.arrow_upward,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ),
