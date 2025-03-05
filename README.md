@@ -2,6 +2,12 @@
 
 DevEcho is a Flutter-based chat application that utilizes Firebase as its backend. It offers a secure and feature-rich messaging experience tailored for developers. Users can exchange messages, including code snippets with syntax highlighting, and reply to messages with quoted references.
 
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=flutter,dart,firebase,github" />
+  </a>
+</p>
+
 ## Features
 
 - **Secure Authentication**: Implements Firebase Authentication for user sign-up and login.
