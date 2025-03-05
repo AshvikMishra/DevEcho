@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixelarticons/pixel.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
@@ -27,7 +28,7 @@ class UserTile extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                const Icon(Icons.person),
+                const Icon(Pixel.user),
         
                 const SizedBox(width: 20),
         

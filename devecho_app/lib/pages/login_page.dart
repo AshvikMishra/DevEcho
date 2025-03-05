@@ -2,6 +2,7 @@ import 'package:devecho_app/services/auth/auth_service.dart';
 import 'package:devecho_app/components/my_button.dart';
 import 'package:devecho_app/components/my_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:pixelarticons/pixel.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.message,
+              Pixel.message,
               size: 60,
               color: Theme.of(context).colorScheme.primary,
             ),

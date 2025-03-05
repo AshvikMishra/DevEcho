@@ -2,6 +2,7 @@ import 'package:devecho_app/pages/github_page.dart';
 import 'package:devecho_app/services/auth/auth_service.dart';
 import 'package:devecho_app/pages/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:pixelarticons/pixel.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -23,7 +24,7 @@ class MyDrawer extends StatelessWidget {
               DrawerHeader(
                 child: Center(
                   child: Icon(
-                    Icons.message,
+                    Pixel.message,
                     color: Theme.of(context).colorScheme.primary,
                     size: 40,
                   ),
@@ -34,7 +35,7 @@ class MyDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25),
                 child: ListTile(
                   title: const Text("H O M E"),
-                  leading: const Icon(Icons.home),
+                  leading: const Icon(Pixel.home),
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -45,7 +46,7 @@ class MyDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25),
                 child: ListTile(
                   title: const Text("S E T T I N G S"),
-                  leading: const Icon(Icons.settings),
+                  leading: const Icon(Pixel.list),
                   onTap: () {
                     Navigator.pop(context);
 
@@ -61,7 +62,7 @@ class MyDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25),
                 child: ListTile(
                   title: const Text("G I T H U B"),
-                  leading: const Icon(Icons.code),
+                  leading: const Icon(Pixel.code),
                   onTap: () {
                     Navigator.pop(context);
 
@@ -79,7 +80,7 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 25, bottom: 25),
             child: ListTile(
               title: const Text("L O G O U T"),
-              leading: const Icon(Icons.logout),
+              leading: const Icon(Pixel.logout),
               onTap: logout,
             ),
           ),
