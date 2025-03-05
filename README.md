@@ -11,6 +11,9 @@ DevEcho is a Flutter-based chat application that utilizes Firebase as its backen
 - **Retro Pixel Theme**: The app features a nostalgic retro pixel aesthetic for a unique user experience.
 - **Google Meet Integration**: Users can access Google Meet for video and voice calls within the app.
 - **GitHub Access**: Integrated GitHub access within the app using `webview_flutter` to allow users to browse repositories and manage their projects.
+- **Light and Dark Themes**: Uses the `provider` package for seamless theme switching between light and dark modes.
+- **Loading Animations**: Implements `loading_animation_widget` to provide smooth loading animations while fetching data.
+- **Enhanced Code Highlighting**: Uses `flutter_highlight` to detect and highlight code snippets in messages.
 
 ## Technologies Used
 
@@ -19,6 +22,9 @@ DevEcho is a Flutter-based chat application that utilizes Firebase as its backen
 - **Cloud Firestore**: Real-time NoSQL database for storing messages.
 - **Firebase Cloud Messaging (FCM)**: Push notifications for new messages.
 - **WebView Flutter**: Enables embedding web content like Google Meet and GitHub within the app.
+- **Provider**: Manages state for theme switching.
+- **Loading Animation Widget**: Provides animated loading indicators.
+- **FlutterHighlight**: Enhances code snippet formatting with syntax highlighting.
 
 ## Installation
 

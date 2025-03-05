@@ -1,5 +1,6 @@
 import 'package:devecho_app/services/auth/auth_gate.dart';
 import 'package:devecho_app/firebase_options.dart';
+import 'package:devecho_app/splash_screen.dart';
 import 'package:devecho_app/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const AuthGate(),
+      home: const SplashScreen(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     ); 
   }
