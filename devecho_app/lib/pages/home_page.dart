@@ -4,6 +4,7 @@ import 'package:devecho_app/pages/chat_page.dart';
 import 'package:devecho_app/services/auth/auth_service.dart';
 import 'package:devecho_app/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -33,7 +34,18 @@ class HomePage extends StatelessWidget {
         return const Text("Error");
       }
       if(snapshot.connectionState == ConnectionState.waiting){
-        return const Text("Loading...");
+        return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Loading ", style: TextStyle(fontSize: 24),),
+                LoadingAnimationWidget.waveDots(color: Theme.of(context).colorScheme.primary, size: 24),
+              ],
+            ),
+          ),
+        );
       }
       return ListView(
         children: snapshot.data!.map<Widget>((userData) => _buildUserListItem(userData, context)).toList(),

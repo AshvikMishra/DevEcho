@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devecho_app/components/my_chat_bubble.dart';
 import 'package:devecho_app/components/my_textfield.dart';
+import 'package:devecho_app/pages/call_page.dart';
 import 'package:devecho_app/services/auth/auth_service.dart';
 import 'package:devecho_app/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pixelarticons/pixel.dart';
 
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
@@ -32,7 +35,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
 
     myFocusNode.addListener(() {
-      if(myFocusNode.hasFocus) {
+      if (myFocusNode.hasFocus) {
         Future.delayed(
           const Duration(milliseconds: 500),
           () => scrollDown(),
@@ -52,15 +55,19 @@ class _ChatPageState extends State<ChatPage> {
     _messageController.dispose();
     super.dispose();
   }
-  
+
   final ScrollController _scrollController = ScrollController();
   void scrollDown() {
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent*1.5, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+    _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent * 1.5,
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn);
   }
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(widget.receiverID, _messageController.text);
+      await _chatService.sendMessage(
+          widget.receiverID, _messageController.text);
 
       _messageController.clear();
     }
@@ -77,15 +84,30 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.transparent,
         foregroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: IconButton(
+              icon: const Icon(Pixel.headset),
+              iconSize: 30,
+              onPressed: () {
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CallPage(),),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
-          const SizedBox(height: 10,),
-
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: _buildMessageList(),
           ),
-
           _buildUserInput(),
         ],
       ),
@@ -102,7 +124,22 @@ class _ChatPageState extends State<ChatPage> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading...");
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            body: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Loading ",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  LoadingAnimationWidget.waveDots(
+                      color: Theme.of(context).colorScheme.primary, size: 24),
+                ],
+              ),
+            ),
+          );
         }
 
         return ListView(
@@ -119,12 +156,14 @@ class _ChatPageState extends State<ChatPage> {
 
     bool isCurrentUser = data["senderID"] == _authService.getCurrentUser()!.uid;
 
-    var alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    var alignment =
+        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
 
     return Container(
       alignment: alignment,
       child: Column(
-        crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           ChatBubble(message: data["message"], isCurrentUser: isCurrentUser)
         ],
@@ -154,7 +193,7 @@ class _ChatPageState extends State<ChatPage> {
             child: IconButton(
               onPressed: sendMessage,
               icon: const Icon(
-                Icons.arrow_upward,
+                Pixel.arrowup,
                 color: Colors.black,
               ),
             ),

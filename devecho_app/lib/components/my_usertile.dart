@@ -28,7 +28,7 @@ class UserTile extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                const Icon(Pixel.user),
+                const Icon(Pixel.avatar),
         
                 const SizedBox(width: 20),
         
