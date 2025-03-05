@@ -26,7 +26,7 @@ class ChatBubble extends StatelessWidget {
     return line.trim().startsWith(">");
   }
 
-  List<InlineSpan> formatMessage(String text, bool isDarkMode) {
+  List<InlineSpan> formatMessage(String text, bool isDarkMode, TextStyle defaultStyle) {
     List<InlineSpan> spans = [];
     List<String> lines = text.split("\n");
 
@@ -58,10 +58,7 @@ class ChatBubble extends StatelessWidget {
                     )
                   : Text(
                       line.substring(1).trim(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: isDarkMode ? Colors.white : Colors.black,
-                      ),
+                      style: defaultStyle.copyWith(fontSize: 14),
                     ),
             ),
           ),
@@ -70,9 +67,7 @@ class ChatBubble extends StatelessWidget {
         spans.add(
           TextSpan(
             text: i == lines.length - 1 ? line : "$line\n",
-            style: TextStyle(
-              color: isDarkMode ? Colors.white : Colors.black,
-            ),
+            style: defaultStyle,
           ),
         );
       }
@@ -83,6 +78,11 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
+    TextStyle defaultTextStyle = Theme.of(context).textTheme.bodyMedium ??
+        TextStyle(
+          fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily,
+          color: isDarkMode ? Colors.white : Colors.black,
+        );
 
     BoxDecoration bubbleDecoration = BoxDecoration(
       color: isCurrentUser
@@ -123,7 +123,7 @@ class ChatBubble extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
       child: RichText(
         text: TextSpan(
-          children: formatMessage(message.trim(), isDarkMode),
+          children: formatMessage(message.trim(), isDarkMode, defaultTextStyle),
         ),
       ),
     );
