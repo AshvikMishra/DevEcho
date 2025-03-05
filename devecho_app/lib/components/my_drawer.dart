@@ -1,3 +1,4 @@
+import 'package:devecho_app/pages/github_page.dart';
 import 'package:devecho_app/services/auth/auth_service.dart';
 import 'package:devecho_app/pages/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,22 @@ class MyDrawer extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const SettingsPage(),),
+                    );
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: ListTile(
+                  title: const Text("G I T H U B"),
+                  leading: const Icon(Icons.code),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const GithubPage(),),
                     );
                   },
                 ),
