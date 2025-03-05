@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_highlight/themes/tomorrow-night.dart';
-import 'package:highlight/languages/python.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;

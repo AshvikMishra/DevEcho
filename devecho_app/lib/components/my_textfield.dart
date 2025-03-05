@@ -12,8 +12,7 @@ class MyTextfield extends StatelessWidget {
     required this.obscureText,
     required this.controller,
     this.focusNode,
-  }
-  );
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,8 @@ class MyTextfield extends StatelessWidget {
         obscureText: obscureText,
         controller: controller,
         focusNode: focusNode,
+        maxLines: null,
+        keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
