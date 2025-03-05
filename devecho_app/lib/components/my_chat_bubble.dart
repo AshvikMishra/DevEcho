@@ -15,46 +15,117 @@ class ChatBubble extends StatelessWidget {
     required this.isCurrentUser,
   });
 
-  bool isPythonCode(String text) {
-    return text.trim().startsWith("def") || text.trim().contains("import") || text.trim().contains("print(") || text.trim().contains("input(");
+  bool containsPythonCode(String text) {
+    return text.contains("def") ||
+        text.contains("import") ||
+        text.contains("print(") ||
+        text.contains("input(");
+  }
+
+  bool isComment(String line) {
+    return line.trim().startsWith(">");
+  }
+
+  List<InlineSpan> formatMessage(String text, bool isDarkMode) {
+    List<InlineSpan> spans = [];
+    List<String> lines = text.split("\n");
+
+    for (int i = 0; i < lines.length; i++) {
+      String line = lines[i].trim();
+      bool comment = isComment(line);
+      bool hasPython = containsPythonCode(line);
+
+      if (comment) {
+        spans.add(
+          WidgetSpan(
+            alignment: PlaceholderAlignment.baseline,
+            baseline: TextBaseline.alphabetic,
+            child: Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 4, bottom: i == lines.length - 1 ? 0 : 4),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: isDarkMode ? Colors.black54 : Colors.grey[300],
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: isDarkMode ? Colors.white70 : Colors.black54),
+              ),
+              child: hasPython
+                  ? HighlightView(
+                      line.substring(1).trim(),
+                      language: 'python',
+                      theme: isDarkMode ? tomorrowNightTheme : githubTheme,
+                      textStyle: const TextStyle(fontSize: 14),
+                    )
+                  : Text(
+                      line.substring(1).trim(),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
+            ),
+          ),
+        );
+      } else {
+        spans.add(
+          TextSpan(
+            text: i == lines.length - 1 ? line : "$line\n",
+            style: TextStyle(
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
+        );
+      }
+    }
+    return spans;
   }
 
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: isCurrentUser
-            ? Theme.of(context).colorScheme.inversePrimary
-            : Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8),
-        border: const Border(
-          right: BorderSide(color: Colors.black, width: 2),
-          bottom: BorderSide(color: Colors.black, width: 2),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            offset: const Offset(2, 2),
-            blurRadius: 4,
-          ),
-        ],
+    BoxDecoration bubbleDecoration = BoxDecoration(
+      color: isCurrentUser
+          ? Theme.of(context).colorScheme.inversePrimary
+          : Theme.of(context).colorScheme.surface,
+      borderRadius: BorderRadius.circular(8),
+      border: Border(
+        left: isCurrentUser ? BorderSide.none : const BorderSide(color: Colors.black, width: 2),
+        right: isCurrentUser ? const BorderSide(color: Colors.black, width: 2) : BorderSide.none,
+        bottom: const BorderSide(color: Colors.black, width: 2),
       ),
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          offset: isCurrentUser ? const Offset(2, 2) : const Offset(-2, 2),
+          blurRadius: 4,
+        ),
+      ],
+    );
+
+    if (!message.contains(">") && containsPythonCode(message)) {
+      return Container(
+        decoration: bubbleDecoration,
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+        child: HighlightView(
+          message.trim(),
+          language: 'python',
+          theme: isDarkMode ? tomorrowNightTheme : githubTheme,
+          textStyle: const TextStyle(fontSize: 14),
+        ),
+      );
+    }
+
+    return Container(
+      decoration: bubbleDecoration,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-      child: isPythonCode(message)
-          ? HighlightView(
-              message,
-              language: 'python',
-              theme: isDarkMode ? tomorrowNightTheme : githubTheme,
-              padding: const EdgeInsets.all(8),
-              textStyle: TextStyle(fontSize: 14),
-            )
-          : Text(
-              message,
-              style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-            ),
+      child: RichText(
+        text: TextSpan(
+          children: formatMessage(message.trim(), isDarkMode),
+        ),
+      ),
     );
   }
 }

@@ -22,8 +22,8 @@ class MyTextfield extends StatelessWidget {
         obscureText: obscureText,
         controller: controller,
         focusNode: focusNode,
-        maxLines: null,
-        keyboardType: TextInputType.multiline,
+        maxLines: obscureText ? 1 : null,
+        keyboardType: obscureText ? TextInputType.text : TextInputType.multiline,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),

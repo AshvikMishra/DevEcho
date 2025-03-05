@@ -55,7 +55,7 @@ class _ChatPageState extends State<ChatPage> {
   
   final ScrollController _scrollController = ScrollController();
   void scrollDown() {
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent*1.5, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
   }
 
   void sendMessage() async {
