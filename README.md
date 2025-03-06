@@ -8,6 +8,9 @@ DevEcho is a Flutter-based chat application that utilizes Firebase as its backen
   </a>
 </p>
 
+## The App
+<img alt="Video Preview" src ="/devecho.gif">
+
 ## Features
 
 - **Secure Authentication**: Implements Firebase Authentication for user sign-up and login.
